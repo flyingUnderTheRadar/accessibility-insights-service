@@ -25,7 +25,7 @@ uploadFolderContents() {
     pathToSource=$2
     storageAccountName=$3
     includePattern=$4
-
+    echo "Uploading $pathToSource to $destinationContainer"
     az storage blob upload-batch --account-name "$storageAccountName" --destination "$destinationContainer" --source "$pathToSource" --pattern "$includePattern" 1>/dev/null
 }
 
