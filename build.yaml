@@ -20,7 +20,7 @@ steps:
           key: 'yarn | $(Agent.OS) | yarn.lock'
           path: '$(Pipeline.Workspace)/.yarn'
           cacheHitVar: '$(Cache_Hit)'
-      displayName: Try restoring cached Yarn packages
+      displayName: Try restoring cached Yarn packages.
 
     - bash: echo $(Cache_Hit)
 
