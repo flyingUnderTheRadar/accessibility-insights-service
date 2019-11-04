@@ -6,7 +6,8 @@ pool:
     vmImage: 'Ubuntu-16.04'
     demands: npm
 
-variables: Cache_Hit:false
+variables: 
+  Cache_Hit: false
 
 steps:
     - task: NodeTool@0
