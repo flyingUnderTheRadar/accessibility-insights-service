@@ -22,7 +22,7 @@ steps:
           cacheHitVar: '$(Cache_Hit)'
       displayName: Try restoring cached Yarn packages.
 
-    - bash: cd $(Pipeline.Workspace); dir; echo $(Cache_Hit)
+    - bash: cd $(System.DefaultWorkingDirectory); dir; echo $(Cache_Hit)
 
     - script: |
           yarn install --frozen-lockfile
