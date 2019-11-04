@@ -8,6 +8,7 @@ pool:
 
 variables:
     Cache_Hit: false
+    Cache_location: ""
 
 steps:
     - task: NodeTool@0
@@ -15,18 +16,25 @@ steps:
           versionSpec: 10.x
       displayName: 'Use Node 10.x'
 
+    - bash: Cache_location=yarn cache dir
+
     - task: CacheBeta@1
       inputs:
-          key: 'yarn | $(Agent.OS) | yarn.lock'
-          path: '$(Pipeline.Workspace)/.yarn'
+          key: 'version2 | yarn | $(Agent.OS) | yarn.lock'
+          path: '$(Cache_location)'
           cacheHitVar: '$(Cache_Hit)'
       displayName: Try restoring cached Yarn packages.
 
-    - bash: cd $(System.DefaultWorkingDirectory); dir; echo $(Cache_Hit)
+    - bash: cd $(System.DefaultWorkingDirectory); dir; echo $(Cache_Hit); 
 
     - script: |
+          echo "Set the cache location to $Cache_location"
           yarn install --frozen-lockfile
       displayName: 'install dependencies'
+    
+    # - bash: cd $(System.DefaultWorkingDirectory); dir; echo $(Cache_Hit)
+
+    # - bash: cd $(Pipeline.Workspace)/.npm; dir; echo $(Cache_Hit)
 
     # - script: |
     #       yarn format-check
