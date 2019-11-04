@@ -6,11 +6,22 @@ pool:
     vmImage: 'Ubuntu-16.04'
     demands: npm
 
+variables: Cache_Hit:false
+
 steps:
     - task: NodeTool@0
       inputs:
           versionSpec: 10.x
       displayName: 'Use Node 10.x'
+
+    - task: CacheBeta@1
+      inputs:
+          key: 'yarn | $(Agent.OS) | yarn.lock'
+          path: '$(Pipeline.Workspace)/.yarn'
+          cacheHitVar: '$(Cache_Hit)'
+      displayName: Try restoring cached Yarn packages
+
+    - bash: echo $(Cache_Hit)
 
     - script: |
           yarn install --frozen-lockfile
