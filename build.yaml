@@ -16,7 +16,14 @@ steps:
           versionSpec: 10.x
       displayName: 'Use Node 10.x'
 
-    - bash: Cache_location=yarn cache dir
+    - task: Bash@3
+      inputs:
+        targetType: 'inline'
+        script: |
+          # Write your commands here
+          
+          Cache_location=$(yarn cache dir)
+          echo "$Cache_location"
 
     - task: CacheBeta@1
       inputs:
